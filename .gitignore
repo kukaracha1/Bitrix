@@ -59,4 +59,7 @@ test.php
 /wamplangues
 /wampthemes
 
+# Local projects
+/pg
+
 # End of https://www.gitignore.io/api/bitrix,1c-bitrix
