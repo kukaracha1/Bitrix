@@ -1,0 +1,62 @@
+
+# Created by https://www.gitignore.io/api/bitrix,1c-bitrix
+
+### 1C-Bitrix ###
+# core
+/bitrix/
+
+# uploaded files
+/upload/
+
+# other files
+test.php
+*.zip
+*.gzip
+*.gz
+*.tgz
+*.tar
+*.gz.[0-9]
+*.sql
+*.log
+*.mp3
+*.exe
+*.db
+*.csv
+*.xml
+*.psd
+*.[oa]
+*~
+### Bitrix ###
+# Bitrix .gitignore (core version 14+)
+
+#Exclude all of core files
+/.htaccess
+/bitrix/*
+
+#But not the templates and non bitrix components
+!/bitrix/templates
+!/bitrix/components
+/bitrix/components/bitrix
+
+#Exclude bitrix gadgets
+!/bitrix/gadgets
+/bitrix/gadgets/bitrix
+
+#User can use that directory to store some stuff, but it's not really recommended, just use /local instead of this
+!/bitrix/php_interface/
+/local/php_interface/constants.php
+
+#Exclude database configs
+/bitrix/php_interface/dbconn.php
+
+#Exclude default file storage directory
+
+# Misc unused files
+/*.txt
+~*.php
+
+# Wamp folders
+/wamplangues
+/wampthemes
+
+# End of https://www.gitignore.io/api/bitrix,1c-bitrix
