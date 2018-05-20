@@ -15,6 +15,12 @@ use \Bitrix\Main\Localization\Loc;
 $this->setFrameMode(true);
 $this->addExternalCss('/bitrix/css/main/bootstrap.css');
 
+// echo '<br>TEST: TEMPLATE<br>';
+
+// var_dump($arParams['PARTNERS']);
+// die;
+// var_dump($arResult['ITEMS'][0]);
+
 if (!empty($arResult['NAV_RESULT']))
 {
 	$navParams =  array(
@@ -143,6 +149,53 @@ $generalParams = array(
 
 $obName = 'ob'.preg_replace('/[^a-zA-Z0-9_]/', 'x', $this->GetEditAreaId($navParams['NavNum']));
 $containerName = 'container-'.$navParams['NavNum'];
+
+// print the buttons & partner's info
+$showPartners = isset($arParams['PARTNERS']);
+if ($showPartners)
+{
+	$partnerID = $arParams['PARTNER_ID'];
+?>
+<ul>
+	<?
+		for($i = 0 ; $i < count($arParams['PARTNERS']) ; $i++)
+		{
+			$partner = $arParams['PARTNERS'][$i];
+			if ($i == $partnerID - 1)
+				$partnerNAME = '<b>' . $partner['NAME'] . '</b>';
+			else
+				$partnerNAME = $partner['NAME'];
+
+			?>
+			<li> <a href="<?="?partner=".($i+1)?>"><?=$partnerNAME?> </a></li>
+			<?
+		}
+		
+	?>
+			<li> <a href="<?="?partner=0"?>"><?=($partnerID==0)? '<b>Show All</b>' : 'Show All'?></a></li>
+</ul>
+
+<?
+	if($partnerID != 0)
+	{
+		// var_dump($arParams['PARTNERS'][$partnerID-1]['INFO']);
+?>
+<div>
+
+ <h3><?=$arParams['PARTNERS'][$partnerID-1]['IBLOCK_NAME'] . ' - ' . $arParams['PARTNERS'][$partnerID-1]['NAME']?></h3>
+<? foreach($arParams['PARTNERS'][$partnerID-1]['INFO'] as $partnerINFO)
+{
+?>
+	<p><?='<h4>'.$partnerINFO['NAME'] . ':</h4> ' . $partnerINFO['VALUE']?></p>
+<?
+}
+?>
+</div>
+<hr>
+
+<?
+	}
+}
 
 if ($showTopPager)
 {
