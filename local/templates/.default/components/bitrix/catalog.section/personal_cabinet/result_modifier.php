@@ -14,6 +14,7 @@ $arParams = $component->applyTemplateModifications();
 *
 */
 
+// var_dump($arResult['ITEMS']);
 // var_dump($arParams['PARTNERS']);
 
 // echo '<br>TEST: MODIFIER<br>';

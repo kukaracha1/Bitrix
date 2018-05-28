@@ -15,7 +15,10 @@ $MpartnerProperty = 'PARTNER_AT';
 	
 GLOBAL $arrFilter;
 $arrFilter = array(
-	"PROPERTY"=>array($MpartnerProperty => array())
+	"PROPERTY"=>array($MpartnerProperty => array(
+		
+	)),
+	"ACTIVE" => ""
 );
 	
 $arrFilterId = array(
@@ -173,6 +176,7 @@ while($ob = $rsName->GetNext()) {
         "USE_PRODUCT_QUANTITY" => "N",
 		// partners' data for result_modifier
 		// "SHOW_TOP_ELEMENTS" => "N",
+		"SHOW_DEACTIVATED" => "Y",
 		"PARTNERS" => $PARTNERS,
 		"PARTNER_ID" => $partnerID
 		)
