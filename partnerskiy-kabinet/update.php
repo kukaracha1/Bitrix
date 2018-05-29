@@ -1,13 +1,13 @@
 <?
-require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
+
 global $USER;
 
 // test Unactivate
 
 //input
-$section = 10;
-$id = 21;
-$active = "N";
+// $section = 10;
+$id = $_POST['id'];
+$active = ($_POST['active'] == 'Y')? 'N' : 'Y';
 
 // UPDATE TEST
 $el = new CIBlockElement;
@@ -17,7 +17,7 @@ $el = new CIBlockElement;
 
 $arLoadProductArray = Array(
   "MODIFIED_BY"    => $USER->GetID(), // элемент изменен текущим пользователем
-  "IBLOCK_SECTION" => $section,          // элемент лежит в корне раздела
+  // "IBLOCK_SECTION" => $section,          // элемент лежит в корне раздела
   // "PROPERTY_VALUES"=> $PROP,
   // "NAME"           => "Элемент",
   "ACTIVE"         => $active,            // активен
@@ -28,7 +28,7 @@ $arLoadProductArray = Array(
 
 $PRODUCT_ID = $id;  // изменяем элемент с кодом (ID) 2
 $res = $el->Update($PRODUCT_ID, $arLoadProductArray);
-var_dump($arLoadProductArray);
-var_dump($res);
+// var_dump($arLoadProductArray);
+// var_dump($res);
 DIE;
 // ------- UPDATE TEST
