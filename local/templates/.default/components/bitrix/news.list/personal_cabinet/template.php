@@ -21,20 +21,57 @@ $arJsConfig = array(
     ) 
 ); 
 
-CUtil::InitJSCore(array('custom_main'));
+CUtil::InitJSCore(array('custom_main','jquery'));
 
 
 foreach ($arJsConfig as $ext => $arExt) { 
     \CJSCore::RegisterExt($ext, $arExt); 
 }
 
-
+$showPartners = isset($arParams['PARTNERS']);
 
 ?>
 
 <?if ($arResult["SECTION"]["PATH"]["0"]["PICTURE"]["SRC"]):?>
 <img src="<?=$arResult["SECTION"]["PATH"]["0"]["PICTURE"]["SRC"]?>">
 <?endif?>
+
+<!-- ---------------------START SHOW PARTNERS INFO -->
+<?if($showPartners):?>
+	<?
+		// get the current partner
+		$partnerID = $arParams['PARTNER_ID'];
+	?>
+	<form class="partners-list">
+		<select class="partners-list__select" name="partner">
+			<?for($i = 0 ; $i < count($arParams['PARTNERS']) ; $i++):?>
+				<?	
+					// show menu with partner's names
+					$partner = $arParams['PARTNERS'][$i];
+					if ($i == $partnerID - 1)
+						$partnerName = $partner['NAME'].' (Текущий)';
+					else
+						$partnerName = $partner['NAME'];
+				?>
+				<option value=<?=($i+1)?> class="<?=($i == $partnerID - 1)? 'selected':''?>"> <?=$partnerName?> </option>
+			<?endfor;?>
+			<option value=0 class="<?=($partnerID == 0)? 'selected':''?>">Показать всё</option>		
+		</select>
+		<button type="submit" class="partners-list__submit btn btn-primary">Выбрать</button>
+	</form>
+	<!-- show the partners info -->
+	<?if($partnerID != 0):?>
+		<div>
+			<?foreach($arParams['PARTNERS'][$partnerID-1]['INFO'] as $partnerINFO):?>
+				<p><?='<h4>'.$partnerINFO['NAME'] . ':</h4> ' . $partnerINFO['VALUE']?></p>
+			<?endforeach;?>
+		</div>
+		<hr>
+	<?endif;?>
+<?endif;?>
+
+<!-- ---------------------END SHOW PARTNERS INFO -->
+
 
 <div class="news-list">
 <?if($arParams["DISPLAY_TOP_PAGER"]):?>
@@ -50,7 +87,7 @@ foreach ($arJsConfig as $ext => $arExt) {
 	
 	?>
 	<div class="news-item" id="<?=$this->GetEditAreaId($arItem['ID']);?>">
-		<input type="button" class="activation <?=(($arItem["ACTIVE"] == "N")? "btn-success" : "btn-danger")?>" data-id=<?=$arItem["ID"]?> value=<?=(($arItem["ACTIVE"] == "N")? "Activate" : "Deactivate")?> >
+		<input type="button" class="activation btn <?=(($arItem["ACTIVE"] == "N")? "btn-success" : "btn-danger")?>" data-id=<?=$arItem["ID"]?> value=<?=(($arItem["ACTIVE"] == "N")? "Activate" : "Deactivate")?> >
 
 		<?if($arParams["DISPLAY_PICTURE"]!="N" && is_array($arItem["PREVIEW_PICTURE"])):?>
 			<?if(!$arParams["HIDE_LINK_WHEN_NO_DETAIL"] || ($arItem["DETAIL_TEXT"] && $arResult["USER_HAVE_ACCESS"])):?>
@@ -60,7 +97,6 @@ foreach ($arJsConfig as $ext => $arExt) {
 						src="<?=$arItem["PREVIEW_PICTURE"]["SRC"]?>"
 						alt="<?=$arItem["PREVIEW_PICTURE"]["ALT"]?>"
 						title="<?=$arItem["PREVIEW_PICTURE"]["TITLE"]?>"
-						style="float:left; max-width: 250px; max-height:250px"
 						/></a>
 			<?else:?>
 				<img
@@ -69,11 +105,10 @@ foreach ($arJsConfig as $ext => $arExt) {
 					src="<?=$arItem["PREVIEW_PICTURE"]["SRC"]?>"
 					alt="<?=$arItem["PREVIEW_PICTURE"]["ALT"]?>"
 					title="<?=$arItem["PREVIEW_PICTURE"]["TITLE"]?>"
-					style="float:left; max-width: 250px; max-height:250px"
 					/>
 			<?endif;?>
 		<?endif?>
-		<div style="float:left">
+		<div class="news-item__desc">
 		<?if($arParams["DISPLAY_DATE"]!="N" && $arItem["DISPLAY_ACTIVE_FROM"]):?>
 			<span class="news-date-time"><?echo $arItem["DISPLAY_ACTIVE_FROM"]?></span>
 		<?endif?>

@@ -14,3 +14,34 @@ input.activation {
     position: absolute;
     right: 3%;
 }
+.partners-list{
+}
+.partners-list__select{
+	height: 35px;
+    width: 80%;
+    border: 1px solid transparent;
+    border-bottom-color: rgb(169,169,169);
+}
+.partners-list__select:focus,
+.partners-list__select:active
+{
+	outline:none;
+}
+.partners-list__select option{
+	font-size:18px;
+}
+.partners-list__select option.selected{
+	font-weight: bold;
+}
+.partners-list__submit{
+	height:35px;
+	width:19%;
+}
+.news-item .preview_picture {
+	float:left; 
+	max-width: 250px; 
+	max-height:250px;
+}
+.news-item .news-item__desc {
+	padding-top: 35px;
+}

@@ -29,7 +29,7 @@ $arrFilterId = array(
 $i = 0;
 $rsName = CIBlockElement::GetList("",$arrFilterId);
 while($ob = $rsName->GetNext()) {
-	// if ($partnerID == 0)
+	if ($partnerID == 0)
 		$arrFilter['PROPERTY'][$MpartnerProperty][] = $ob['ID'];
 	// compose list of partners for result_modifier
 	$PARTNERS[$i]['IBLOCK_NAME'] = $ob['IBLOCK_NAME'];
@@ -132,7 +132,9 @@ while($ob = $rsName->GetNext()) {
 		"SET_BROWSER_TITLE" => "N",	// Устанавливать заголовок окна браузера
 		"INCLUDE_IBLOCK_INTO_CHAIN" => "N",	// Включать инфоблок в цепочку навигации
 		"ADD_SECTIONS_CHAIN" => "N",	// Включать раздел в цепочку навигации
-		"SECTION_URL" => "partnerskiy-kabinet"
+		"SECTION_URL" => "partnerskiy-kabinet",
+		"PARTNERS" => $PARTNERS,
+		"PARTNER_ID" => $partnerID
 	),
 	false
 );
