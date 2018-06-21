@@ -9,53 +9,53 @@ $component = $this->getComponent();
 $arParams = $component->applyTemplateModifications();
 
 
-// var_dump($arResult['PROPERTIES']['PARTNER_AT']);
-$partner = $arResult['PROPERTIES']['PARTNER_AT'];
+// var_dump($arResult['PROPERTIES']['PARTNER']);
+$partner = $arResult['PROPERTIES']['PARTNER'];
+// var_dump($partner);
 
 $iblock_id = $partner['LINK_IBLOCK_ID'];
 $element_id = $partner['VALUE'];
 
-// IT WORKS
-//BY DISPLAY_PROPERTIES
-$rsName = CIBlockElement::GetById($element_id);
-while($ob = $rsName->GetNext()) {
-	$VALUE['DISPLAY_VALUE'] =$ob['NAME'];
-	$VALUE['NAME'] =$ob['IBLOCK_NAME'];
-	$VALUE['ID'] = $ob['ID'];
-	$VALUE['CODE'] = $ob['IBLOCK_CODE'];
-	
-	$arResult['DISPLAY_PROPERTIES'][] =$VALUE;
-}
+if ($element_id != '')
+{
+	// MORE CORRECT - replace getById and getProperty with getList and arSelect
+	$detail_text = "";
 
-// BY DETAIL_TEXT
-$rsProps = CIBlockElement::GetProperty($iblock_id, $element_id);
-$i=0;
-while($ob = $rsProps->GetNext()) {
-	if ($ob['ID'] != 48)
+	$arSelect = Array("ID", "NAME", "IBLOCK_CODE", "IBLOCK_NAME", "PROPERTY_*");
+	$arFilter = array(
+			'IBLOCK_ID' => $iblock_id,
+			'ID' => $element_id
+		);
+	$rsList = CIBlockElement::GetList(Array(), $arFilter, false, Array(), $arSelect);
+
+	while ($ob = $rsList->GetNextElement())
 	{
-		$VALUE = $ob;
-		$VALUE['DISPLAY_VALUE'] = $ob['VALUE'];
-		$VALUES[] = $VALUE;
+			$arrFields = $ob->GetFields();
+
+		$VALUE['DISPLAY_VALUE'] =$arrFields['NAME'];
+		$VALUE['NAME'] =$arrFields['IBLOCK_NAME'];
+		$VALUE['ID'] = $arrFields['ID'];
+		$VALUE['CODE'] = $arrFields['IBLOCK_CODE'];
+		
+		$arResult['DISPLAY_PROPERTIES'][] =$VALUE;
+		
+		$arrProperties = $ob->GetProperties();
+		foreach( $arrProperties as $property)
+		{
+			if ($property['CODE'] != 'PARTNER_OPERATOR')
+				$detail_text .= '<b>'.$property['NAME'] . ':</b> <br>' . $property['VALUE'] . '<br>';
+
+		}
 	}
-}
 
-// var_dump($arResult['DETAIL_TEXT']);
-if ($arResult['DETAIL_TEXT_TYPE'] === 'html' )
-{
-	$arResult['DETAIL_TEXT'] .='<p>';
-}
-foreach ($VALUES as $VALUE)
-{
+	if ($arResult['DETAIL_TEXT_TYPE'] === 'html' )
+	{
+		$detail_text = '<p>' . $detail_text . '</p>';
+	}
 
-		$arResult['DETAIL_TEXT'] .= '<b>'.$VALUE['NAME'] . ':</b> <br>' . $VALUE['DISPLAY_VALUE'] . '<br>';
-	
-}
-if ($arResult['DETAIL_TEXT_TYPE'] === 'html' )
-{
-	$arResult['DETAIL_TEXT'] .='</p>';
-}
+	$arResult['DETAIL_TEXT'] .= $detail_text;
 
-// var_dump($arResult['DETAIL_TEXT']);
-
+	// var_dump($arResult['DETAIL_TEXT']);
+}
 
 

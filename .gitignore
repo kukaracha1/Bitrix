@@ -61,5 +61,6 @@ test.php
 
 # Local projects
 /pg
+/eshop_app
 
 # End of https://www.gitignore.io/api/bitrix,1c-bitrix
