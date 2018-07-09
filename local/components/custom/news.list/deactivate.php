@@ -30,13 +30,13 @@
 			$arFilterPartner = array(
 				'ID' => $arFields['PROPERTY_'.$REL_BLOCK_CODE.'_VALUE']
 			);
-			$arSelectPartner = array('PROPERTY_'.$REL_BLOCK_CODE.'_'.$REL_BLOCK_PROP);
+			$arSelectPartner = array('PROPERTY_'.$REL_BLOCK_PROP);
 			$resPar = CIBlockElement::GetList(Array(), $arFilterPartner, false, Array(), $arSelectPartner);
 			
 			while ($obpar = $resPar->GetNextElement())
 			{
 				$arFieldsPartner = $obpar->GetFields();  
-				if ( $arFieldsPartner['PROPERTY_'.$REL_BLOCK_CODE.'_'.$REL_BLOCK_PROP.'_VALUE'] != $userID)
+				if ( $arFieldsPartner['PROPERTY_'.$REL_BLOCK_PROP.'_VALUE'] != $userID)
 					error('Access denied!');
 			}
 			

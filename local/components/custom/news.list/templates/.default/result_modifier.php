@@ -74,14 +74,16 @@
 		
 		foreach( $arrProperties as $prop)
 		{	
-			if ($prop['CODE'] != $REL_BLOCK_CODE.'_'.$REL_BLOCK_PROP)
+			if ($prop['CODE'] != $REL_BLOCK_PROP)
 			{
 				// adjust variables
 				$PROPERTY = array();
 				// compose property info
 				$PROPERTY['NAME'] = $prop['NAME'];
 				$PROPERTY['VALUE'] = $prop['VALUE'];
+				$PROPERTY['CODE'] = $prop['CODE'];
 				$PROPERTY['ID'] = $prop['ID'];
+
 				// write property to partner
 				$arParams['PARTNERS'][$i]['INFO'][] = $PROPERTY;
 			}

@@ -73,7 +73,7 @@
 			"SECTION_URL" => "partnerskiy-kabinet",
 			"MIBLOCK_ID" => 4,
 			"REL_BLOCK_CODE" => 'PARTNER',
-			"REL_BLOCK_PROP" => 'OPERATOR',
+			"REL_BLOCK_PROP" => 'PARTNER_OPERATOR',
 			"SHOW_PARTNERS" => "Y"
 		),
 		false

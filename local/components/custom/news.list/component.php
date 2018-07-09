@@ -51,7 +51,7 @@ CPageOption::SetOptionString("main", "nav_page_in_session", "N");
 	$arrFilterId = array(
 		'IBLOCK_ID' => $MiblockId,
 		'PROPERTY' => array( 
-			$REL_BLOCK_CODE.'_'.$REL_BLOCK_PROP => $userID
+			$REL_BLOCK_PROP => $userID
 			)
 	);
 
@@ -87,11 +87,10 @@ CPageOption::SetOptionString("main", "nav_page_in_session", "N");
 		 $partnerID = 1;
 	 }
 	
-	// compose filter for component 'section'
+	// compose filter for component 'news.list'
 	if ($partnerID != 0)
 	{
 		$arrFilter['PROPERTY'][$REL_BLOCK_CODE][] = $PARTNERS[$partnerID-1]['ID'];
-		// $arrFilter['PROPERTY_PARTNER'][] = $PARTNERS[$partnerID-1]['ID'];
 		$APPLICATION->SetTitle("Партнерский кабинет - " . $PARTNERS[$partnerID-1]['NAME']);
 	}
 	
