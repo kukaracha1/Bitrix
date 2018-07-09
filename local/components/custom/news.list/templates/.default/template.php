@@ -23,11 +23,6 @@ $arJsConfig = array(
 
 CUtil::InitJSCore(array('jquery', 'custom_main'));
 
-
-// foreach ($arJsConfig as $ext => $arExt) { 
-    // CJSCore::RegisterExt($ext, $arExt); 
-// }
-
 $showPartners = ($arParams['SHOW_PARTNERS'] == "Y");
 
 ?>
@@ -81,29 +76,28 @@ $showPartners = ($arParams['SHOW_PARTNERS'] == "Y");
 
 	<?foreach($arResult["ITEMS"] as $arItem):?>
 		<?
-		$this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_EDIT"));
-		$this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_DELETE"), array("CONFIRM" => GetMessage('CT_BNL_ELEMENT_DELETE_CONFIRM')));
-		
+			$this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_EDIT"));
+			$this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_DELETE"), array("CONFIRM" => GetMessage('CT_BNL_ELEMENT_DELETE_CONFIRM')));
 		?>
 		<div class="news-item" id="<?=$this->GetEditAreaId($arItem['ID']);?>">
 			<input type="button" class="activation btn <?=(($arItem["ACTIVE"] == "N")? "btn-success" : "btn-danger")?>" data-id=<?=$arItem["ID"]?> value=<?=(($arItem["ACTIVE"] == "N")? "Activate" : "Deactivate")?> >
 
-			<?if($arParams["DISPLAY_PICTURE"]!="N" && is_array($arItem["PREVIEW_PICTURE"])):?>
+			<?if($arParams["DISPLAY_PICTURE"]!="N" && is_array($arItem["DETAIL_PICTURE"])):?>
 				<?if(!$arParams["HIDE_LINK_WHEN_NO_DETAIL"] || ($arItem["DETAIL_TEXT"] && $arResult["USER_HAVE_ACCESS"])):?>
 					<a href="<?=$arItem["DETAIL_PAGE_URL"]?>"><img
 							class="preview_picture"
 							border="0"
-							src="<?=$arItem["PREVIEW_PICTURE"]["SRC"]?>"
-							alt="<?=$arItem["PREVIEW_PICTURE"]["ALT"]?>"
-							title="<?=$arItem["PREVIEW_PICTURE"]["TITLE"]?>"
+							src="<?=$arItem["DETAIL_PICTURE"]["SRC"]?>"
+							alt="<?=$arItem["DETAIL_PICTURE"]["ALT"]?>"
+							title="<?=$arItem["DETAIL_PICTURE"]["TITLE"]?>"
 							/></a>
 				<?else:?>
 					<img
 						class="preview_picture"
 						border="0"
-						src="<?=$arItem["PREVIEW_PICTURE"]["SRC"]?>"
-						alt="<?=$arItem["PREVIEW_PICTURE"]["ALT"]?>"
-						title="<?=$arItem["PREVIEW_PICTURE"]["TITLE"]?>"
+						src="<?=$arItem["DETAIL_PICTURE"]["SRC"]?>"
+						alt="<?=$arItem["DETAIL_PICTURE"]["ALT"]?>"
+						title="<?=$arItem["DETAIL_PICTURE"]["TITLE"]?>"
 						/>
 				<?endif;?>
 			<?endif?>
@@ -136,7 +130,7 @@ $showPartners = ($arParams['SHOW_PARTNERS'] == "Y");
 
 			<?endforeach;?>
 					</div>
-			<?if($arParams["DISPLAY_PICTURE"]!="N" && is_array($arItem["PREVIEW_PICTURE"])):?>
+			<?if($arParams["DISPLAY_PICTURE"]!="N" && is_array($arItem["DETAIL_PICTURE"])):?>
 				<div style="clear:both"></div>
 			<?endif?>
 		</div>

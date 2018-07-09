@@ -4,43 +4,6 @@
  * @var CBitrixComponentTemplate $this
  * @var CatalogSectionComponent $component
  */
-
-/*	set the picture property  
-	(because it has another property name in news.list:  
-		preview_picture instead of detail_picture 
-*/
-	if (count($arResult['ITEMS']) > 0)
-	{
-		// sort the Items on ID (because getlist will sort it)
-		usort($arResult["ITEMS"], "cmp");		// cmp - comparing function (define in the end)
-		 
-		// define filters and select
-		$arSelect = Array("ID", "DETAIL_PICTURE");
-		$arFilter = array(
-				'ID' => array()
-			);
-
-			// compose the ids' list
-		 foreach ($arResult["ITEMS"] as $item)
-			$arFilter['ID'][] = $item['ID'];
-
-		$resItm = CIBlockElement::GetList(Array(), $arFilter, false, Array(), $arSelect);
-		// die;
-		$i = 0;
-		while ($ob = $resItm->GetNextElement())
-		{
-			$arFields = $ob->GetFields();  
-			// var_dump($arFields);
-			$tmpFileID = $arFields['DETAIL_PICTURE'];
-			$tmpFile = CFile::GetFileArray($tmpFileID);
-			// write it to result
-			$arResult["ITEMS"][$i]['PREVIEW_PICTURE'] = $tmpFile;
-
-			$i++;
-		}
-
-	}
-	
 	
 //	fill up partners info
 	$MiblockId = $arParams['MIBLOCK_ID'];

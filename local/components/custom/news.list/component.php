@@ -277,6 +277,7 @@ if($this->startResultCache(false, array(($arParams["CACHE_GROUPS"]==="N"? false:
 		"PREVIEW_TEXT",
 		"PREVIEW_TEXT_TYPE",
 		"PREVIEW_PICTURE",
+		"DETAIL_PICTURE"
 	));
 	$bGetProperty = count($arParams["PROPERTY_CODE"])>0;
 	if($bGetProperty)
