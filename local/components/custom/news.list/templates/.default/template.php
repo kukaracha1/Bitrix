@@ -12,20 +12,20 @@
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
 
-// $arJsConfig = array( 
-    // 'custom_main' => array( 
-        // // 'js' => $templateFolder.'/script.js', 
-        // 'rel' => array(
-			// "ajax",
-		// ), 
-    // ) 
-// ); 
+$arJsConfig = array( 
+    'custom_main' => array( 
+        'js' => $templateFolder.'/script.js', 
+        'rel' => array(
+			"ajax"
+		), 
+    ) 
+); 
 
-CUtil::InitJSCore(array('ajax','jquery'));
+CUtil::InitJSCore(array('jquery', 'custom_main'));
 
 
 // foreach ($arJsConfig as $ext => $arExt) { 
-    // \CJSCore::RegisterExt($ext, $arExt); 
+    // CJSCore::RegisterExt($ext, $arExt); 
 // }
 
 $showPartners = isset($arParams['PARTNERS']);
@@ -42,7 +42,7 @@ $showPartners = isset($arParams['PARTNERS']);
 		// get the current partner
 		$partnerID = $arParams['PARTNER_ID'];
 	?>
-	<form class="partners-list">
+	<form class="partners-list" data-rel-code = "<?= $arParams['REL_BLOCK_CODE']?>" data-rel-prop = "<?= $arParams['REL_BLOCK_PROP']?>"  data-path="<?=$componentPath?>" >
 		<select class="partners-list__select" name="partner">
 			<?for($i = 0 ; $i < count($arParams['PARTNERS']) ; $i++):?>
 				<?	
@@ -154,76 +154,3 @@ $showPartners = isset($arParams['PARTNERS']);
 	<?endif;?>
 <?endif;?>
 </div>
-
-<script>
-	var deactivatePath = '<?=$componentPath?>/deactivate.php';
-	// console.log(deactivatePath);
-	
-	BX.ready(function(){
-	// jquery part
-	// set the selected partner as a start value of 'select'
-	var sel = $('.partners-list__select'),
-		value = $('.partners-list__select .selected').val();
-	$(sel).val(value);
-	
-	//bx part
-   BX.bindDelegate(
-      document.body, 'click', {className: 'activation' },
-      function(e){
-         if(!e) {
-            e = window.event;
-         }
-		 console.log(this.dataset);
-		 // prevent multiple clicks
-		 BX.adjust(BX(this), {props: {enable: 'disabled'}});
-		BX.adjust(BX(this), {props: {value: '...'}});
-
-		 // call the action
-		 activation(this);
-		 // activate button
-         BX.adjust(BX(this), {props: {enable: 'enabled'}});
-		 return BX.PreventDefault(e);
-      }
-   );
-});
-
-
-function activation(button){
-	BX.ajax({   
-		url: deactivatePath,
-		data: {
-			id: button.dataset['id'],
-			REL_BLOCK_CODE: '<?= $arParams['REL_BLOCK_CODE']?>',
-			REL_BLOCK_PROP: '<?= $arParams['REL_BLOCK_PROP']?>' 
-		},
-		method: 'POST',
-		dataType: 'json',
-		timeout: 30,
-		async: true,
-		processData: true,
-		scriptsRunFirst: true,
-		emulateOnload: true,
-		start: true,
-		cache: false,
-		onsuccess: function(data){
-			console.log("success");
-			
-			BX.toggleClass(BX(button), "btn-success");
-			BX.toggleClass(BX(button), "btn-danger");
-			
-			if ( data['active'] == 'Y')
-				BX.adjust(BX(button), {props: {value: 'Deactivate'}});
-			else
-				BX.adjust(BX(button), {props: {value: 'Activate'}});
-
-		},
-		onfailure: function(state , data){
-			console.log("fail");
-			console.log(state);
-			console.log(data);
-		}
-	});
-}
-
-
-</script>
