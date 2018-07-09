@@ -40,6 +40,8 @@
 		}
 
 	}
+	
+	
 //	fill up partners info
 	$MiblockId = $arParams['MIBLOCK_ID'];
 	$REL_BLOCK_CODE = $arParams['REL_BLOCK_CODE'];

@@ -16,7 +16,7 @@
 			"SORT_ORDER2" => "ASC",	// Направление для второй сортировки новостей
 			"FILTER_NAME" => "",	// Фильтр
 			"FIELD_CODE" => array(
-				"ACTIVE"
+				"ACTIVE",
 			),
 			"FILTER_FIELD_CODE" => array(	// Поля
 				0 => "name",
