@@ -3,7 +3,6 @@
 
 	global $USER;
 	$userID = $USER->GetId();
-	
 
 	if ($userID == null)
 		error('You are not authorized to access this page');
@@ -59,6 +58,7 @@
 		{
 			$result['status'] = 'ok';
 			$result['active'] = $active;
+			
 			echo json_encode($result, JSON_UNESCAPED_UNICODE);
 
 		}

@@ -1,5 +1,5 @@
 
-	var deactivatePath,	rel_code, rel_prop;
+	var deactivatePath,	rel_code, rel_prop, mess_act, mess_deact;
 	
 	BX.ready(function(){
 	// jquery part
@@ -8,7 +8,9 @@
 	deactivatePath = form.data('path') + '/deactivate.php';
 	rel_code = form.data('rel-code');
 	rel_prop = form.data('rel-prop');
-
+	mess_act = form.data('mess-activate');
+	mess_deact = form.data('mess-deactivate');
+	
 	// set the selected partner as a start value of 'select'
 	var sel = $('.partners-list__select'),
 		value = $('.partners-list__select .selected').val();
@@ -57,14 +59,14 @@ function activation(button){
 		cache: false,
 		onsuccess: function(data){
 			console.log("success");
+			console.log(data);
 			
 			BX.toggleClass(BX(button), "btn-success");
 			BX.toggleClass(BX(button), "btn-danger");
-			
-			if ( data['active'] == 'Y')
-				BX.adjust(BX(button), {props: {value: 'Deactivate'}});
+			if(data['active'] == 'Y')
+				BX.adjust(BX(button), {props: {value: mess_deact}});
 			else
-				BX.adjust(BX(button), {props: {value: 'Activate'}});
+				BX.adjust(BX(button), {props: {value: mess_act}});
 			
 			// activate button
 			BX.adjust(BX(button), {props: {enable: true}});

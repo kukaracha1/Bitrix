@@ -34,7 +34,7 @@ $showPartners = ($arParams['SHOW_PARTNERS'] == "Y");
 	// get the current partner
 	$partnerID = $arParams['PARTNER_ID'];
 ?>
-<form class="partners-list" data-rel-code = "<?= $arParams['REL_BLOCK_CODE']?>" data-rel-prop = "<?= $arParams['REL_BLOCK_PROP']?>"  data-path="<?=$componentPath?>" >
+<form class="partners-list" data-rel-code = "<?= $arParams['REL_BLOCK_CODE']?>" data-rel-prop = "<?= $arParams['REL_BLOCK_PROP']?>"  data-path="<?=$componentPath?>" data-mess-ACTIVATE="<?=GetMessage('ACTIVATE')?>" data-mess-DEACTIVATE="<?=GetMessage('DEACTIVATE')?>" >
 	<select class="partners-list__select" name="partner">
 		<?for($i = 0 ; $i < count($arParams['PARTNERS']) ; $i++):?>
 			<?	
