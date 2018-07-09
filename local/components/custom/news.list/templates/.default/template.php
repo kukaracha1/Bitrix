@@ -28,7 +28,7 @@ CUtil::InitJSCore(array('jquery', 'custom_main'));
     // CJSCore::RegisterExt($ext, $arExt); 
 // }
 
-$showPartners = isset($arParams['PARTNERS']);
+$showPartners = ($arParams['SHOW_PARTNERS'] == "Y");
 
 ?>
 
@@ -36,38 +36,35 @@ $showPartners = isset($arParams['PARTNERS']);
 <img src="<?=$arResult["SECTION"]["PATH"]["0"]["PICTURE"]["SRC"]?>">
 <?endif?>
 
+<?
+	// get the current partner
+	$partnerID = $arParams['PARTNER_ID'];
+?>
+<form class="partners-list" data-rel-code = "<?= $arParams['REL_BLOCK_CODE']?>" data-rel-prop = "<?= $arParams['REL_BLOCK_PROP']?>"  data-path="<?=$componentPath?>" >
+	<select class="partners-list__select" name="partner">
+		<?for($i = 0 ; $i < count($arParams['PARTNERS']) ; $i++):?>
+			<?	
+				// show menu with partner's names
+				$partner = $arParams['PARTNERS'][$i];
+				if ($i == $partnerID - 1)
+					$partnerName = $partner['NAME'].' (Текущий)';
+				else
+					$partnerName = $partner['NAME'];
+			?>
+			<option value=<?=($i+1)?> class="<?=($i == $partnerID - 1)? 'selected':''?>"> <?=$partnerName?> </option>
+		<?endfor;?>
+		<option value=0 class="<?=($partnerID == 0)? 'selected':''?>">Показать всё</option>		
+	</select>
+	<button type="submit" class="partners-list__submit btn btn-primary">Выбрать</button>
+</form>
 <!-- ---------------------START SHOW PARTNERS INFO -->
-<?if($showPartners):?>
-	<?
-		// get the current partner
-		$partnerID = $arParams['PARTNER_ID'];
-	?>
-	<form class="partners-list" data-rel-code = "<?= $arParams['REL_BLOCK_CODE']?>" data-rel-prop = "<?= $arParams['REL_BLOCK_PROP']?>"  data-path="<?=$componentPath?>" >
-		<select class="partners-list__select" name="partner">
-			<?for($i = 0 ; $i < count($arParams['PARTNERS']) ; $i++):?>
-				<?	
-					// show menu with partner's names
-					$partner = $arParams['PARTNERS'][$i];
-					if ($i == $partnerID - 1)
-						$partnerName = $partner['NAME'].' (Текущий)';
-					else
-						$partnerName = $partner['NAME'];
-				?>
-				<option value=<?=($i+1)?> class="<?=($i == $partnerID - 1)? 'selected':''?>"> <?=$partnerName?> </option>
-			<?endfor;?>
-			<option value=0 class="<?=($partnerID == 0)? 'selected':''?>">Показать всё</option>		
-		</select>
-		<button type="submit" class="partners-list__submit btn btn-primary">Выбрать</button>
-	</form>
-	<!-- show the partners info -->
-	<?if($partnerID != 0):?>
-		<div>
-			<?foreach($arParams['PARTNERS'][$partnerID-1]['INFO'] as $partnerINFO):?>
-				<p><?='<h4><b>'.$partnerINFO['NAME'] . ':</b></h4> ' . $partnerINFO['VALUE']?></p>
-			<?endforeach;?>
-		</div>
-		<hr>
-	<?endif;?>
+<?if($showPartners && $partnerID != 0):?>
+	<div>
+		<?foreach($arParams['PARTNERS'][$partnerID-1]['INFO'] as $partnerINFO):?>
+			<p><?='<h4><b>'.$partnerINFO['NAME'] . ':</b></h4> ' . $partnerINFO['VALUE']?></p>
+		<?endforeach;?>
+	</div>
+	<hr>
 <?endif;?>
 
 <!-- ---------------------END SHOW PARTNERS INFO -->
