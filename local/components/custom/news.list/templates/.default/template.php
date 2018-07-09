@@ -24,7 +24,6 @@ $arJsConfig = array(
 CUtil::InitJSCore(array('jquery', 'custom_main'));
 
 $showPartners = ($arParams['SHOW_PARTNERS'] == "Y");
-
 ?>
 
 <?if ($arResult["SECTION"]["PATH"]["0"]["PICTURE"]["SRC"]):?>
@@ -42,15 +41,15 @@ $showPartners = ($arParams['SHOW_PARTNERS'] == "Y");
 				// show menu with partner's names
 				$partner = $arParams['PARTNERS'][$i];
 				if ($i == $partnerID - 1)
-					$partnerName = $partner['NAME'].' (Текущий)';
+					$partnerName = $partner['NAME'].' ('.GetMessage('CURRENT').')';
 				else
 					$partnerName = $partner['NAME'];
 			?>
 			<option value=<?=($i+1)?> class="<?=($i == $partnerID - 1)? 'selected':''?>"> <?=$partnerName?> </option>
 		<?endfor;?>
-		<option value=0 class="<?=($partnerID == 0)? 'selected':''?>">Показать всё</option>		
+		<option value=0 class="<?=($partnerID == 0)? 'selected':''?>"><?=GetMessage('SHOW_ALL')?></option>		
 	</select>
-	<button type="submit" class="partners-list__submit btn btn-primary">Выбрать</button>
+	<button type="submit" class="partners-list__submit btn btn-primary"><?=GetMessage('CHOOSE')?></button>
 </form>
 <!-- ---------------------START SHOW PARTNERS INFO -->
 <?if($showPartners && $partnerID != 0):?>
@@ -67,7 +66,7 @@ $showPartners = ($arParams['SHOW_PARTNERS'] == "Y");
 <div class="news-list">
 <?if(count($arResult["ITEMS"]) == 0):?>
 
-	<h3 style="text-align: center;"> You have no any goods for this partner yet...</h3>
+	<h3 style="text-align: center;"> <?=GetMessage('EMPTY_LIST')?></h3>
 
 <?else:?>
 	<?if($arParams["DISPLAY_TOP_PAGER"]):?>
@@ -80,7 +79,7 @@ $showPartners = ($arParams['SHOW_PARTNERS'] == "Y");
 			$this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_DELETE"), array("CONFIRM" => GetMessage('CT_BNL_ELEMENT_DELETE_CONFIRM')));
 		?>
 		<div class="news-item" id="<?=$this->GetEditAreaId($arItem['ID']);?>">
-			<input type="button" class="activation btn <?=(($arItem["ACTIVE"] == "N")? "btn-success" : "btn-danger")?>" data-id=<?=$arItem["ID"]?> value=<?=(($arItem["ACTIVE"] == "N")? "Activate" : "Deactivate")?> >
+			<input type="button" class="activation btn <?=(($arItem["ACTIVE"] == "N")? "btn-success" : "btn-danger")?>" data-id=<?=$arItem["ID"]?> value=<?=(($arItem["ACTIVE"] == "N")? GetMessage('ACTIVATE') : GetMessage('DEACTIVATE'))?> >
 
 			<?if($arParams["DISPLAY_PICTURE"]!="N" && is_array($arItem["DETAIL_PICTURE"])):?>
 				<?if(!$arParams["HIDE_LINK_WHEN_NO_DETAIL"] || ($arItem["DETAIL_TEXT"] && $arResult["USER_HAVE_ACCESS"])):?>
