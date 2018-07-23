@@ -1,3 +1,23 @@
+/*	SPOTS 	*/
+
+.set_picture--wrapper {
+	position: relative;
+	text-align: center;
+}
+.set_picture__circle {
+	position: absolute; width: 20px; height: 20px; border: 1px solid black; border-radius: 50%; background: orange;
+}
+.set_picture_circle--wrapper {
+	position: absolute;
+    top: 0;
+    width: 100%;
+}
+.set_picture_circle--container {
+	position : relative;
+	margin : 0 auto;
+	
+}
+
 /* Sidebar */
 .product-item-detail-info-section{padding:0 20px;}
 /*@media (max-width: 767px){

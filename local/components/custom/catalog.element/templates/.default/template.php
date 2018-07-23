@@ -229,8 +229,28 @@ if (!empty($arParams['LABEL_PROP_POSITION']))
 								foreach ($actualItem['MORE_PHOTO'] as $key => $photo)
 								{
 									?>
-									<div class="product-item-detail-slider-image<?=($key == 0 ? ' active' : '')?>" data-entity="image" data-id="<?=$photo['ID']?>">
+									<div class="product-item-detail-slider-image<?=($key == 0 ? ' active' : '')?> set_picture--wrapper" data-entity="image" data-id="<?=$photo['ID']?>">
 										<img src="<?=$photo['SRC']?>" alt="<?=$alt?>" title="<?=$title?>"<?=($key == 0 ? ' itemprop="image"' : '')?>>
+										<div class="set_picture_circle--wrapper">
+											<div class="set_picture_circle--container">
+												<?
+													$j = 1;
+													foreach ($arParams['SPOTS'] as $key => $spot) {
+														$coor_x = $spot['COORD_X'] * $photo['WIDTH'];
+														$coor_y = $spot['COORD_Y'] * $photo['HEIGHT'];
+														?>
+														<div 
+															class = "set_picture__circle" 
+															style = "top: <?=$coor_y . 'px'?>; left: <?=$coor_x . 'px'?>;"
+														>
+															<?=$j++?>
+														</div>
+
+														<?
+													}
+												?>
+											</div>
+										</div>
 									</div>
 									<?
 								}
