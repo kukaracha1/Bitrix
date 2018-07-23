@@ -498,6 +498,13 @@ if(!empty($PROP)):
 				}
 		$tabControl->EndCustomField("PROPERTY_".$prop_fields["ID"], $hidden);
 	endforeach;?>
+
+<?
+	global $APPLICATION;
+	$APPLICATION->SetAdditionalCss("/local/styles.css");
+	$APPLICATION->AddHeadScript("/local/script.js");
+?>
+
 	
 <?endif;
 
