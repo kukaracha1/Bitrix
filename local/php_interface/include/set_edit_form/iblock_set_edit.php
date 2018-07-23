@@ -418,6 +418,42 @@ if(!empty($PROP)):
 		</td>
 	</tr>
 
+		<?
+		// get list of circles (SET_GOOD relation)
+		$setFilter = array(
+			'IBLOCK_CODE' => 'set_good',
+			'PROPERTY_SET_ID' => $str_ID 	// SET id which was gotten above
+		);
+		
+		// get list of SET_GOOD elements for this set
+		$rres = CIBlockElement::GetList(
+		array(),
+		$setFilter,
+		false,
+		false,
+		array(
+			'ID', 'IBLOCK_ID', 'PROPERTY_*'
+		)
+		);
+
+	?>
+	<tr>
+		<td class="old_data">
+			<?while($ob = $rres->GetNextElement())
+			{
+				$ob_props = $ob->GetProperties();
+				$ob_fields = $ob->GetFields();
+				
+			?>
+				<input type="hidden" id="old-<?=$ob_props['PROPERTY_ID'][VALUE]?>"  data-y="<?=$ob_props['COORD_Y'][VALUE]?>" data-x="<?=$ob_props['COORD_X'][VALUE]?>" data-id="<?=$ob_fields['ID']?>">
+			<?
+			}
+			?>
+		</td>
+		<td class="new_data"></td>
+	</tr>
+
+	
 	<?
 	$tabControl->EndCustomField();
 	
