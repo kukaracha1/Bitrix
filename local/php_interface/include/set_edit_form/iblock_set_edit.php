@@ -392,6 +392,36 @@ if(!empty($PROP)):
 
 	$tabControl->AddSection("IBLOCK_ELEMENT_PROP_VALUE", GetMessage("IBLOCK_ELEMENT_PROP_VALUE"));
 	
+	$tabControl->BeginCustomField();
+	?>
+	<tr >
+		<td colspan=3 class="set_picture--wrapper">
+		<?
+		// dublicate detail picture
+		if (!is_null($str_DETAIL_PICTURE)):
+			$tmpFile = CFile::GetFileArray($str_DETAIL_PICTURE);
+		// ------- dublicate detail picture
+		?>
+			<img
+				class="set_picture"
+				border="0"
+				src="<?=$tmpFile["SRC"]?>"
+				alt="<?=$tmpFile["ALT"]?>"
+				title="<?=$tmpFile["TITLE"]?>"
+			/>
+			<div class="set_picture_circle--wrapper">
+				<div class="set_picture_circle--container"></div>
+			</div>
+		<?else:?>
+			<p class="set_picture--error"> Выберите изображение </p>
+		<?endif;?>
+		</td>
+	</tr>
+
+	<?
+	$tabControl->EndCustomField();
+	
+	
 	foreach($PROP as $prop_code=>$prop_fields):
 		$prop_values = $prop_fields["VALUE"];
 
